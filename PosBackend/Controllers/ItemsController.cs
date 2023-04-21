@@ -169,10 +169,15 @@ namespace apiForAli.Controllers
             if (product == null)
                 return NotFound();
 
+            var productSizes = await _context.Sizes.Where(e => e.ProductId == product.Id).ToListAsync();
 
+            if (productSizes != null)
+            _context.Sizes.RemoveRange(productSizes);
             _context.Products.Remove(product);
 
             _context.SaveChanges();
+
+            var test = "";
 
             return Ok();
         }
